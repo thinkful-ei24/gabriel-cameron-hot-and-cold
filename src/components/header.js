@@ -6,11 +6,21 @@ import InfoModal from './info-modal';
 import './header.css';
 
 export default function Header(props) {
+  function generateHeaderJSX() {
     return (
-        <header>
-            <TopNav />
-            {/* <InfoModal /> */}
-            <h1>HOT or COLD</h1>
-        </header>
+      <header>
+        <TopNav toggleModalDisplay={props.toggleModalDisplay} />
+        {generateModalJSX()}
+        <h1>HOT or COLD</h1>
+      </header>
     );
-};
+  }
+
+  function generateModalJSX() {
+    if (props.modalDisplayed) {
+      return <InfoModal toggleModalDisplay={props.toggleModalDisplay} />;
+    }
+  }
+
+  return generateHeaderJSX();
+}
