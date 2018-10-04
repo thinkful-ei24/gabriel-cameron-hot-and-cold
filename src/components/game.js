@@ -16,8 +16,10 @@ export default class Game extends React.Component {
     };
 
     this.toggleModalDisplay = this.toggleModalDisplay.bind(this);
+    this.updateGuessState = this.updateGuessState.bind(this);
   }
 
+  // Updates modal display state
   toggleModalDisplay() {
     console.log('toggle modal called');
 
@@ -26,6 +28,20 @@ export default class Game extends React.Component {
     this.setState({ modalDisplayed: invertedModalState });
   }
 
+  // Updates guess array with latest guess
+  updateGuessState(guess) {
+    console.log('update guess state called ', guess);
+    // get a new guess
+    // merge guess into a new array
+    const newGuessArray = [...this.state.guesses, guess];
+
+    // that we use this.setState to update state with
+    this.setState({ guesses: newGuessArray });
+  }
+
+  // Update user feedback message
+  updateUserFeedbackMessageState() {}
+
   render() {
     return (
       <div>
@@ -33,7 +49,10 @@ export default class Game extends React.Component {
           modalDisplayed={this.state.modalDisplayed}
           toggleModalDisplay={this.toggleModalDisplay}
         />
-        <GuessSection feedback={this.state.feedback} />
+        <GuessSection
+          feedback={this.state.feedback}
+          updateGuessState={this.updateGuessState}
+        />
         {/* Gets length of guesses array to find count */}
         <GuessCount count={this.state.guesses.length} />
         <GuessList guesses={this.state.guesses} />
