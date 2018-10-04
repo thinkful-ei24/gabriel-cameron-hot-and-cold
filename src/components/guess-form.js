@@ -7,7 +7,7 @@ export default class GuessForm extends React.Component {
     super(props);
 
     this.state = {
-      guess: 1
+      guess: ''
     };
   }
 
@@ -22,6 +22,7 @@ export default class GuessForm extends React.Component {
           event.preventDefault();
           console.log('guess submitted');
           this.props.updateGuessState(this.state.guess);
+          this.setState({guess: ''});
         }}
       >
         <input
@@ -35,6 +36,7 @@ export default class GuessForm extends React.Component {
           autoComplete="off"
           placeholder="Enter your Guess"
           required
+          value={this.state.guess}
           onChange={event => this.handleGuessChange(event)}
         />
         <input
@@ -43,6 +45,7 @@ export default class GuessForm extends React.Component {
           className="button"
           name="submit"
           value="Guess"
+          disabled={this.props.gameOver}
         />
       </form>
     );

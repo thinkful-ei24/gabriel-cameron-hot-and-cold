@@ -12,11 +12,14 @@ export default class Game extends React.Component {
     this.state = {
       guesses: [],
       feedback: 'Make your guess',
-      modalDisplayed: false
+      modalDisplayed: false,
+      targetNumber: 17, 
+      gameOver: false
     };
 
     this.toggleModalDisplay = this.toggleModalDisplay.bind(this);
     this.updateGuessState = this.updateGuessState.bind(this);
+    this.newGame = this.newGame.bind(this);
   }
 
   // Updates modal display state
@@ -36,11 +39,29 @@ export default class Game extends React.Component {
     const newGuessArray = [...this.state.guesses, guess];
 
     // that we use this.setState to update state with
-    this.setState({ guesses: newGuessArray });
+    this.setState({ guesses: newGuessArray,
+       feedback: this.updateUserFeedbackMessageState(guess) });
   }
 
   // Update user feedback message
-  updateUserFeedbackMessageState() {}
+  updateUserFeedbackMessageState(guess) {
+    if(guess === this.state.targetNumber){
+      this.setState({gameOver: true});
+      return "Correct";
+    }
+    else if(Math.abs(guess-this.state.targetNumber) < 20){
+      return "Warm";}
+    else{return "Cold";}
+  }
+
+  // Updates state for new game
+  newGame(){
+    this.setState({
+      gameOver: false,
+      guesses: [],
+      feedback: 'Make your guess'
+    })
+  }
 
   render() {
     return (
@@ -48,10 +69,12 @@ export default class Game extends React.Component {
         <Header
           modalDisplayed={this.state.modalDisplayed}
           toggleModalDisplay={this.toggleModalDisplay}
+          newGame={this.newGame}
         />
         <GuessSection
           feedback={this.state.feedback}
           updateGuessState={this.updateGuessState}
+          gameOver={this.state.gameOver}
         />
         {/* Gets length of guesses array to find count */}
         <GuessCount count={this.state.guesses.length} />

@@ -9,7 +9,7 @@ export default function Header(props) {
   function generateHeaderJSX() {
     return (
       <header>
-        <TopNav toggleModalDisplay={props.toggleModalDisplay} />
+        <TopNav toggleModalDisplay={props.toggleModalDisplay} newGame={props.newGame} />
         {generateModalJSX()}
         <h1>HOT or COLD</h1>
       </header>
