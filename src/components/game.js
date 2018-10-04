@@ -13,7 +13,7 @@ export default class Game extends React.Component {
       guesses: [],
       feedback: 'Make your guess',
       modalDisplayed: false,
-      targetNumber: 17, 
+      targetNumber: this.generateTargetNumber(), 
       gameOver: false
     };
 
@@ -59,8 +59,14 @@ export default class Game extends React.Component {
     this.setState({
       gameOver: false,
       guesses: [],
-      feedback: 'Make your guess'
+      feedback: 'Make your guess',
+      targetNumber: this.generateTargetNumber()
     })
+  }
+
+  // Generate target number
+  generateTargetNumber(){
+    return Math.floor(Math.random()*100+1);
   }
 
   render() {
